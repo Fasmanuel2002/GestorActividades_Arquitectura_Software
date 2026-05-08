@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de usuarios inscritos</title>
+</head>
+<body>
+    <h1>Usuarios inscritos</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Teléfono</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in usuarios_inscritos %}
+            <tr>
+                <td>{{ usuario.id }}</td>
+                <td>{{ usuario.nombre_usuario }}</td>
+                <td>{{ usuario.telefono_usuario }}</td>
+                <td>{{ usuario.email_usuario }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

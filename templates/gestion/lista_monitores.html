@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de monitores</title>
+</head>
+<body>
+    <h1>Monitores</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre de Monitor</th>
+                <th>Especializacion de Monitor</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for monitor in monitores %}
+            <tr>
+                <td>{{ monitor.id }}</td>
+                <td>{{ monitor.nombre }}</td>
+                <td>{{ monitor.especializacion }}</td>
+                
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+        
