@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Salas</title>
+</head>
+<body>
+    <h1>Salas</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre Sala</th>
+                <th>Capacidad Sala</th>
+                <th>Ubicación Sala</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sala in salas %}
+            <tr>
+                <td>{{ sala.id }}</td>
+                <td>{{ sala.nombre_sala }}</td>
+                <td>{{ sala.capacidad_sala }}</td>
+                <td>{{ sala.ubicacion_sala }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+        
