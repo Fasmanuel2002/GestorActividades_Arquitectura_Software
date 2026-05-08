@@ -3,7 +3,7 @@
 import os
 import sys
 
-
+# Ricardo Innitial commit
 def main():
     """Run administrative tasks."""
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "centro_actividades.settings")
