@@ -28,6 +28,13 @@
                 <td>{{ actividad.duracion_actividad }}</td>
                 <td>{{ actividad.plazas_disponibles }}</td>
             </tr>
+            <tr>
+                <td colspan="6">
+                    <a href="{% url 'inscribir_usuario_actividad_formulario' actividad.id %}">
+                        Inscribir usuario
+                    </a>
+                </td>
+            </tr>
             {% endfor %}
         </tbody>
     </table>
