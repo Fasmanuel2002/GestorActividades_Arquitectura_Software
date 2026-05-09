@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Crear Sala{% endblock %}
+
+{% block contenido %}
+    <h2>Formulario de Sala</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div>
+            <label for="nombre_sala">Nombre:</label><br>
+            <input type="text" id="nombre_sala" name="nombre_sala" required>
+        </div>
+
+        <br>
+
+        <div>
+            <label for="capacidad_sala">Capacidad:</label><br>
+            <input type="number" id="capacidad_sala" name="capacidad_sala" required>
+        </div>
+
+        <br>
+
+        <div>
+            <label for="ubicacion_sala">Ubicación:</label><br>
+            <input type="text" id="ubicacion_sala" name="ubicacion_sala" required>
+        </div>
+
+        
+
+        <button type="submit">Guardar sala</button>
+    </form>
+
+    <br>
+
+    <a href="{% url 'lista_salas' %}">Volver al listado de salas</a>
+{% endblock %}

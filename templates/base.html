@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block titulo %}Gestor de Actividades{% endblock %}</title>
+</head>
+<body>
+
+    <header>
+        <h1>Gestor de Actividades</h1>
+
+        <nav>
+            <a href="{% url 'inicio' %}">Inicio</a> |
+            <a href="{% url 'lista_actividades' %}">Actividades</a> |
+            <a href="{% url 'lista_usuarios_inscritos' %}">Usuarios</a> |
+            <a href="{% url 'lista_monitores' %}">Monitores</a> |
+            <a href="{% url 'lista_salas' %}">Salas</a> |
+            <a href="{% url 'crear_usuario_formulario' %}">Nuevo Usuario</a> |
+            <a href="{% url 'registrar_monitor_formulario' %}">Nuevo Monitor</a> |
+            <a href="{% url 'registrar_sala_formulario' %}">Nueva Sala</a> |
+            <a href="{% url 'registrar_responsable_sala_formulario' %}">Nuevo Responsable de sala</a> |
+            <a href="{% url 'crear_actividad_formulario' %}">Nueva Actividad</a>
+
+        </nav>
+
+        <hr>
+    </header>
+
+    {% block contenido %}
+    {% endblock %}
+
+</body>
+</html>

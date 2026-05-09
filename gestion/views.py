@@ -1,33 +1,38 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 
 from .models import Usuario, Sala, Monitor, ResponsableSala, Actividad
 
+
+def inicio(request):
+    return render(request, "gestion/inicio.html")
 """
 GET ALL LIST
 """
 def lista_actividades(request):
     actividades = Actividad.objects.all()
-    return render(request, "gestion/lista_actividades.html", {"actividades": actividades})
+    return render(request, "gestion/GET_ALL/lista_actividades.html", {"actividades": actividades})
 
-def list_usuarios_inscritos(request):
+def lista_usuarios_inscritos(request):
     usuarios_inscritos = Usuario.objects.all()
-    return render(request, "gestion/lista_usuarios_inscritos.html", {"usuarios_inscritos": usuarios_inscritos})
+    return render(request, "gestion/GET_ALL/lista_usuarios_inscritos.html", {"usuarios_inscritos": usuarios_inscritos})
 
 def lista_monitores(request):
     monitores = Monitor.objects.all()
-    return render(request, "gestion/lista_monitores.html", {"monitores": monitores})
+    return render(request, "gestion/GET_ALL/lista_monitores.html", {"monitores": monitores})
 
 def lista_salas(request):
     salas = Sala.objects.all()
-    return render(request, "gestion/lista_salas.html", {"salas": salas})
+    return render(request, "gestion/GET_ALL/lista_salas.html", {"salas": salas})
 
 
 """
 POST ENDPOINTS
 """
+
+# Endpoint para registrar un usuario a través de una solicitud POST con JSON
 @csrf_exempt
 def registrar_usuario(request) -> JsonResponse:
     if request.method == 'POST':
@@ -48,6 +53,21 @@ def registrar_usuario(request) -> JsonResponse:
     return JsonResponse({"error": "Método no permitido"}, status=405)
 
 
+#/ Endpoint para crear un usuario a través de un formulario HTML
+def crear_usuario_formulario(request):
+    if request.method == "POST":
+        Usuario.objects.create(
+            nombre_usuario=request.POST["nombre_usuario"],
+            edad_usuario=request.POST["edad_usuario"],
+            email_usuario=request.POST["email_usuario"],
+            telefono_usuario=request.POST["telefono_usuario"]
+        )
+
+        return redirect("list_usuarios_inscritos")
+
+    return render(request, "gestion/POST/formulario_usuario.html")
+
+
 @csrf_exempt
 def registrar_sala(request) -> JsonResponse:
     if request.method == 'POST':
@@ -65,6 +85,17 @@ def registrar_sala(request) -> JsonResponse:
         except KeyError:
             return JsonResponse({"error": "Datos incompletos"}, status=400)
     return JsonResponse({"error": "Método no permitido"}, status=405)
+
+#/ Endpoint para crear un sala a través de un formulario HTML
+def registrar_sala_formulario(request):
+    if request.method == "POST":
+        Sala.objects.create(
+            nombre_sala=request.POST["nombre_sala"],
+            capacidad_sala=request.POST["capacidad_sala"],
+            ubicacion_sala=request.POST["ubicacion_sala"]
+        )
+        return redirect("crear_sala_formulario")
+    return render(request, "gestion/POST/formulario_sala.html")
 
 
 @csrf_exempt
@@ -84,6 +115,16 @@ def registrar_monitor(request) -> JsonResponse:
             return JsonResponse({"error": "Datos incompletos"}, status=400)
     return JsonResponse({"error": "Método no permitido"}, status=405)
 
+
+# Endpoint para crear un monitor a través de un formulario HTML
+def registrar_monitor_formulario(request):
+    if request.method == "POST":
+        Monitor.objects.create(
+            nombre=request.POST["nombre"],
+            especializacion=request.POST["especializacion"]
+        )
+        return redirect("lista_monitores")
+    return render(request, "gestion/POST/formulario_monitor.html")
 
 @csrf_exempt
 def registrar_responsable_sala(request) -> JsonResponse:
@@ -106,6 +147,20 @@ def registrar_responsable_sala(request) -> JsonResponse:
         except KeyError:
             return JsonResponse({"error": "Datos incompletos"}, status=400)
     return JsonResponse({"error": "Método no permitido"}, status=405)
+
+# Endpoint para crear un responsable de sala a través de un formulario HTML
+def registrar_responsable_sala_formulario(request):
+    if request.method == "POST":
+        sala = Sala.objects.get(id=request.POST["sala_id"])
+        ResponsableSala.objects.create(
+            nombre_responsable=request.POST["nombre_responsable"],
+            telefono_responsable=request.POST["telefono_responsable"],
+            email_responsable=request.POST["email_responsable"],
+            sala=sala
+        )
+        return redirect("crear_responsable_sala_formulario")
+    salas = Sala.objects.all()
+    return render(request, "gestion/POST/formulario_responsable_sala.html", {"salas": salas})
 
 
 @csrf_exempt
@@ -136,6 +191,35 @@ def registrar_actividad(request) -> JsonResponse:
         except KeyError:
             return JsonResponse({"error": "Datos incompletos"}, status=400)
     return JsonResponse({"error": "Método no permitido"}, status=405)
+
+
+# Endpoint para crear una actividad a través de un formulario HTML
+def registrar_actividad_formulario(request):
+    if request.method == "POST":
+        monitor = Monitor.objects.get(id=request.POST["monitor_actividad_id"])
+        sala_principal = Sala.objects.get(id=request.POST["sala_principal_id"])
+        Actividad.objects.create(
+            nombre_actividad=request.POST["nombre_actividad"],
+            tipo_actividad=request.POST["tipo_actividad"],
+            horario_actividad=request.POST["horario_actividad"],
+            descripcion_actividad=request.POST["descripcion_actividad"],
+            duracion_actividad=request.POST["duracion_actividad"],
+            plazas_disponibles=request.POST["plazas_disponibles"],
+            monitor_actividad=monitor,
+            sala_principal=sala_principal
+        )
+        return redirect("crear_actividad_formulario")
+    monitores = Monitor.objects.all()
+    salas = Sala.objects.all()
+    return render(request, "gestion/POST/formulario_actividad.html", {"monitores": monitores, "salas": salas})
+
+
+
+
+
+"""
+GET By ID ENDPOINTS
+"""
 
 
 def buscar_usuario(request, usuario_id):
