@@ -25,11 +25,27 @@ urlpatterns = [
     path("crear_sala_formulario/", views.registrar_sala_formulario, name="registrar_sala_formulario"),
     path("crear_monitor_formulario/", views.registrar_monitor_formulario, name="registrar_monitor_formulario"),
     path("crear_responsable_sala_formulario/", views.registrar_responsable_sala_formulario, name="registrar_responsable_sala_formulario"),
-   path("crear_actividad_formulario/",views.registrar_actividad_formulario,name="crear_actividad_formulario"),
+    path("crear_actividad_formulario/",views.registrar_actividad_formulario,name="crear_actividad_formulario"),
+    
     #Rutas para GET() para buscar por ID
     path("usuarios/<int:usuario_id>/", views.buscar_usuario, name="buscar_usuario"),
     path("salas/<int:sala_id>/", views.buscar_sala, name="buscar_sala"),
     path("monitores/<int:monitor_id>/", views.buscar_monitor, name="buscar_monitor"),
     path("responsables_sala/<int:responsable_sala_id>/", views.buscar_responsable_sala, name="buscar_responsable_sala"),
     path("actividades/<int:actividad_id>/", views.buscar_actividad, name="buscar_actividad"),
+    
+    #Rutas para PUT() para actualizar por ID
+    path("usuarios/<int:usuario_id>/editar/", views.update_usuario, name="update_usuario"),
+    path("salas/<int:sala_id>/editar/", views.update_sala, name="update_sala"),
+    path("monitores/<int:monitor_id>/editar", views.update_monitor, name="update_monitor"),
+    path("responsables_sala/<int:responsable_sala_id>/editar", views.update_responsable_sala, name="update_responsable_sala"),
+    path("actividades/<int:actividad_id>/editar", views.update_actividad, name="update_actividad"),
+    
+    #Rutas para DELETE() para eliminar por ID
+    path("usuarios/<int:usuario_id>/eliminar/", views.delete_usuario, name="eliminar_usuario"),
+    path("salas/<int:sala_id>/eliminar/", views.delete_sala, name="eliminar_sala"),
+    path("monitores/<int:monitor_id>/eliminar/", views.delete_monitor, name="eliminar_monitor"),
+    path("responsables_sala/<int:responsable_sala_id>/eliminar/", views.delete_responsable_sala, name="eliminar_responsable_sala"),
+    path("actividades/<int:actividad_id>/eliminar/", views.delete_actividad, name="eliminar_actividad"),
+    
 ]
