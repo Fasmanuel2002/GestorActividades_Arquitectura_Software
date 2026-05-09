@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Crear Usuario{% endblock %}
+
+{% block contenido %}
+    <h2>Formulario de Usuario</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div>
+            <label for="nombre_usuario">Nombre:</label><br>
+            <input type="text" id="nombre_usuario" name="nombre_usuario" required>
+        </div>
+
+        <br>
+
+        <div>
+            <label for="edad_usuario">Edad:</label><br>
+            <input type="number" id="edad_usuario" name="edad_usuario" required>
+        </div>
+
+        <br>
+
+        <div>
+            <label for="email_usuario">Email:</label><br>
+            <input type="email" id="email_usuario" name="email_usuario" required>
+        </div>
+
+        <br>
+
+        <div>
+            <label for="telefono_usuario">Teléfono:</label><br>
+            <input type="text" id="telefono_usuario" name="telefono_usuario" required>
+        </div>
+
+        <br>
+
+        <button type="submit">Guardar usuario</button>
+    </form>
+
+    <br>
+
+    <a href="{% url 'lista_usuarios_inscritos' %}">Volver al listado de usuarios</a>
+{% endblock %}

@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Crear Actividad{% endblock %}
+
+{% block contenido %}
+    <h2>Formulario de Actividad</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div>
+            <label for="nombre_actividad">Nombre de la actividad:</label><br>
+            <input type="text" id="nombre_actividad" name="nombre_actividad" required>
+        </div>
+
+        <br>
+
+        <div>
+            <label for="tipo_actividad">Tipo de actividad:</label><br>
+            <input type="text" id="tipo_actividad" name="tipo_actividad" required>
+        </div>
+
+        <br>
+
+        <div>
+            <label for="horario_actividad">Horario:</label><br>
+            <input type="text" id="horario_actividad" name="horario_actividad" placeholder="Ej: Lunes 18:00" required>
+        </div>
+
+        <br>
+
+        <div>
+            <label for="descripcion_actividad">Descripción:</label><br>
+            <textarea id="descripcion_actividad" name="descripcion_actividad" rows="4" required></textarea>
+        </div>
+
+        <br>
+
+        <div>
+            <label for="duracion_actividad">Duración en minutos:</label><br>
+            <input type="number" id="duracion_actividad" name="duracion_actividad" min="1" required>
+        </div>
+
+        <br>
+
+        <div>
+            <label for="plazas_disponibles">Plazas disponibles:</label><br>
+            <input type="number" id="plazas_disponibles" name="plazas_disponibles" min="1" required>
+        </div>
+
+        <br>
+
+        <div>
+            <label for="monitor_actividad_id">Monitor:</label><br>
+            <select id="monitor_actividad_id" name="monitor_actividad_id" required>
+                <option value="">Selecciona un monitor</option>
+
+                {% for monitor in monitores %}
+                    <option value="{{ monitor.id }}">
+                        {{ monitor.nombre }} - {{ monitor.especializacion }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <br>
+
+        <div>
+            <label for="sala_principal_id">Sala principal:</label><br>
+            <select id="sala_principal_id" name="sala_principal_id" required>
+                <option value="">Selecciona una sala</option>
+
+                {% for sala in salas %}
+                    <option value="{{ sala.id }}">
+                        {{ sala.nombre_sala }} - Capacidad: {{ sala.capacidad_sala }} - {{ sala.ubicacion_sala }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <br>
+
+        <button type="submit">Guardar actividad</button>
+    </form>
+
+    <br>
+
+    <a href="{% url 'lista_actividades' %}">Volver al listado de actividades</a>
+{% endblock %}
