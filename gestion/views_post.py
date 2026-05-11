@@ -205,3 +205,24 @@ def inscribir_usuario_actividad_formulario(request, actividad_id : int) -> rende
     usuarios = Usuario.objects.all()
     
     return render(request, "gestion/Inscripciones/formulario_usuario_actividad.html", {"usuarios": usuarios, "actividad": actividad})
+
+
+@csrf_exempt
+def eliminar_inscripcion_actividad(request, actividad_id, usuario_id):
+    if request.method == 'POST':
+        try:
+            actividad = Actividad.objects.get(id=actividad_id)
+            usuario = Usuario.objects.get(id=usuario_id)
+            inscripcion = UsuariosActividad.objects.get(
+                actividad=actividad,
+                usuario=usuario
+            )
+            inscripcion.delete()
+            return JsonResponse({"mensaje": "Inscripción eliminada con éxito"})
+        except Actividad.DoesNotExist:
+            return JsonResponse({"error": "Actividad no encontrada"}, status=404)
+        except Usuario.DoesNotExist:
+            return JsonResponse({"error": "Usuario no encontrado"}, status=404)
+        except UsuariosActividad.DoesNotExist:
+            return JsonResponse({"error": "Inscripción no encontrada"}, status=404)
+    return JsonResponse({"error": "Método no permitido"}, status=405)

@@ -101,3 +101,18 @@ def buscar_actividad(request, actividad_id : int) -> JsonResponse:
     except Actividad.DoesNotExist:
         return JsonResponse({"error": "Actividad no encontrada"}, status=404)
 
+
+def listar_inscripciones_actividad(request, actividad_id):
+    try:
+        actividad = Actividad.objects.get(id=actividad_id)
+        usuarios = actividad.usuarios_inscritos_actividad.all().values(
+            'id',
+            'nombre_usuario',
+            'edad_usuario',
+            'email_usuario',
+            'telefono_usuario'
+        )
+        return JsonResponse(list(usuarios), safe=False)
+    except Actividad.DoesNotExist:
+        return JsonResponse({"error": "Actividad no encontrada"}, status=404)
+
