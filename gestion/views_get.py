@@ -101,3 +101,95 @@ def buscar_actividad(request, actividad_id : int) -> JsonResponse:
     except Actividad.DoesNotExist:
         return JsonResponse({"error": "Actividad no encontrada"}, status=404)
 
+
+def filtrar_actividades(request):
+    tipo = request.GET.get('tipo')
+    monitor_id = request.GET.get('monitor')
+
+    if tipo is not None:
+        actividades = Actividad.objects.filter(tipo_actividad=tipo).values(
+            'id',
+            'nombre_actividad',
+            'tipo_actividad',
+            'horario_actividad',
+            'descripcion_actividad',
+            'duracion_actividad',
+            'plazas_disponibles',
+            'monitor_actividad_id',
+            'sala_principal_id'
+        )
+        return JsonResponse(list(actividades), safe=False)
+
+    if monitor_id is not None:
+        try:
+            monitor = Monitor.objects.get(id=monitor_id)
+            actividades = Actividad.objects.filter(monitor_actividad=monitor).values(
+                'id',
+                'nombre_actividad',
+                'tipo_actividad',
+                'horario_actividad',
+                'descripcion_actividad',
+                'duracion_actividad',
+                'plazas_disponibles',
+                'monitor_actividad_id',
+                'sala_principal_id'
+            )
+            return JsonResponse(list(actividades), safe=False)
+        except Monitor.DoesNotExist:
+            return JsonResponse({"error": "Monitor no encontrado"}, status=404)
+
+    actividades = Actividad.objects.all().values(
+        'id',
+        'nombre_actividad',
+        'tipo_actividad',
+        'horario_actividad',
+        'descripcion_actividad',
+        'duracion_actividad',
+        'plazas_disponibles',
+        'monitor_actividad_id',
+        'sala_principal_id'
+    )
+    return JsonResponse(list(actividades), safe=False)
+
+
+def filtrar_usuarios(request):
+    actividad_id = request.GET.get('actividad')
+
+    if actividad_id is not None:
+        try:
+            actividad = Actividad.objects.get(id=actividad_id)
+            usuarios = actividad.usuarios_inscritos_actividad.all().values(
+                'id',
+                'nombre_usuario',
+                'edad_usuario',
+                'email_usuario',
+                'telefono_usuario'
+            )
+            return JsonResponse(list(usuarios), safe=False)
+        except Actividad.DoesNotExist:
+            return JsonResponse({"error": "Actividad no encontrada"}, status=404)
+
+    usuarios = Usuario.objects.all().values(
+        'id',
+        'nombre_usuario',
+        'edad_usuario',
+        'email_usuario',
+        'telefono_usuario'
+    )
+    return JsonResponse(list(usuarios), safe=False)
+
+
+def listar_inscripciones_actividad(request, actividad_id):
+    try:
+        actividad = Actividad.objects.get(id=actividad_id)
+        usuarios = actividad.usuarios_inscritos_actividad.all().values(
+            'id',
+            'nombre_usuario',
+            'edad_usuario',
+            'email_usuario',
+            'telefono_usuario'
+        )
+        return JsonResponse(list(usuarios), safe=False)
+    except Actividad.DoesNotExist:
+        return JsonResponse({"error": "Actividad no encontrada"}, status=404)
+

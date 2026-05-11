@@ -10,8 +10,9 @@ from . import views_delete
 urlpatterns = [
     
     path("", views.inicio, name="inicio"),
-    #Rutas para GETAll()
-    path("actividades/", views_get.lista_actividades, name="lista_actividades"),
+    #Rutas para GETAll() y filtros
+    path("actividades/", views_get.filtrar_actividades, name="filtrar_actividades"),
+    path("usuarios/", views_get.filtrar_usuarios, name="filtrar_usuarios"),
     path("usuarios_inscritos/", views_get.lista_usuarios_inscritos, name="lista_usuarios_inscritos"),
     path("monitores/", views_get.lista_monitores, name="lista_monitores"),
     path("salas/", views_get.lista_salas, name="lista_salas"),
@@ -54,5 +55,7 @@ urlpatterns = [
  
  
     #Rutas para Inscripciones
-    path("actividades/<int:actividad_id>/inscribir/",views_post.inscribir_usuario_actividad_formulario, name="inscribir_usuario_actividad_formulario")   
+    path("actividades/<int:actividad_id>/inscripciones/", views_get.listar_inscripciones_actividad, name="listar_inscripciones_actividad"),
+    path("actividades/<int:actividad_id>/inscribir/", views_post.inscribir_usuario_actividad_formulario, name="inscribir_usuario_actividad_formulario"),
+    path("actividades/<int:actividad_id>/inscripciones/<int:usuario_id>/eliminar/", views_post.eliminar_inscripcion_actividad, name="eliminar_inscripcion_actividad"),
 ]
