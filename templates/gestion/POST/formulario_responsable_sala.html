@@ -1,36 +1,81 @@
 {% extends 'base.html' %}
 
-{% block titulo %}Crear Responsable de la sala{% endblock %}
+{% block titulo %}Crear Responsable de Sala{% endblock %}
 
 {% block contenido %}
-    <h2>Formulario de Responsable de la sala</h2>
 
-    <form method="post">
-        {% csrf_token %}
+<h2>Formulario de Responsable de Sala</h2>
 
-        <br>
-        <div>
-            <label for="nombre_responsable">Nombre:</label><br>
-            <input type="text" id="nombre_responsable" name="nombre_responsable" required>
-        </div>
-        </br>
-        <br>
-        <div>
-            <label for="telefono_responsable">Teléfono:</label><br>
-            <input type="text" id="telefono_responsable" name="telefono_responsable" required>
-        </div>
-        <br>
+<form method="post">
+    {% csrf_token %}
 
-        <br>
-        <div>
-            <label for="email_responsable">Email:</label><br>
-            <input type="email" id="email_responsable" name="email_responsable" required>
-        </div>    
-    
-        <button type="submit">Guardar responsable</button>
-    </form>
+    <div>
+        <label for="nombre_responsable">Nombre:</label><br>
+        <input
+            type="text"
+            id="nombre_responsable"
+            name="nombre_responsable"
+            required
+        >
+    </div>
 
     <br>
 
-    <a href="{% url 'lista_salas' %}">Volver al listado de salas</a>
+    <div>
+        <label for="telefono_responsable">Teléfono:</label><br>
+        <input
+            type="text"
+            id="telefono_responsable"
+            name="telefono_responsable"
+            required
+        >
+    </div>
+
+    <br>
+
+    <div>
+        <label for="email_responsable">Email:</label><br>
+        <input
+            type="email"
+            id="email_responsable"
+            name="email_responsable"
+            required
+        >
+    </div>
+
+    <br>
+
+    <div>
+        <label for="sala">Sala asignada:</label><br>
+
+        <select name="sala" id="sala" required>
+
+            <option value="">
+                Selecciona una sala
+            </option>
+
+            {% for sala in salas %}
+                <option value="{{ sala.id }}">
+                    {{ sala.nombre_sala }}
+                    - {{ sala.ubicacion_sala }}
+                </option>
+            {% endfor %}
+
+        </select>
+    </div>
+
+    <br>
+
+    <button type="submit">
+        Guardar responsable
+    </button>
+
+</form>
+
+<br>
+
+<a href="{% url 'lista_salas' %}">
+    Volver al listado de salas
+</a>
+
 {% endblock %}

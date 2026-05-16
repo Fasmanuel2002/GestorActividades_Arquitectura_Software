@@ -7,8 +7,21 @@ GET ALL LIST
 """
 def lista_actividades(request):
     actividades = Actividad.objects.all()
-    return render(request, "gestion/GET_ALL/lista_actividades.html", {"actividades": actividades})
 
+    tipo = request.GET.get('tipo')
+    monitor = request.GET.get('monitor')
+
+    if tipo:
+        actividades = actividades.filter(tipo_actividad=tipo)
+
+    if monitor:
+        actividades = actividades.filter(monitor_actividad_id=monitor)
+
+    return render(
+        request,
+        "gestion/GET_ALL/lista_actividades.html",
+        {"actividades": actividades}
+    )
 def lista_usuarios_inscritos(request):
     usuarios_inscritos = Usuario.objects.all()
     return render(request, "gestion/GET_ALL/lista_usuarios_inscritos.html", {"usuarios_inscritos": usuarios_inscritos})

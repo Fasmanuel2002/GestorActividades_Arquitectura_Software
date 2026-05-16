@@ -11,12 +11,16 @@ urlpatterns = [
     
     path("", views.inicio, name="inicio"),
     #Rutas para GETAll() y filtros
-    path("actividades/", views_get.filtrar_actividades, name="filtrar_actividades"),
-    path("usuarios/", views_get.filtrar_usuarios, name="filtrar_usuarios"),
+    path("actividades/", views_get.lista_actividades, name="lista_actividades"),
+    path("usuarios/", views_get.lista_usuarios_inscritos, name="lista_usuarios"),
     path("usuarios_inscritos/", views_get.lista_usuarios_inscritos, name="lista_usuarios_inscritos"),
     path("monitores/", views_get.lista_monitores, name="lista_monitores"),
     path("salas/", views_get.lista_salas, name="lista_salas"),
     
+    #Rutas para GetById
+    path('actividades/', views_get.filtrar_actividades, name='filtrar_actividades'),
+    path('usuarios/', views_get.filtrar_usuarios, name='filtrar_usuarios'),
+
     #Rutas para POST() para nuevos registros en formato JSON y para utilizar POSTMAN
     path("usuarios/registrar/", views_post.registrar_usuario, name="registrar_usuario"),
     path("salas/registrar/", views_post.registrar_sala, name="registrar_sala"),

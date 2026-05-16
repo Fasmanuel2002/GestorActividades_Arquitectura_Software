@@ -40,7 +40,7 @@ def crear_usuario_formulario(request):
             telefono_usuario=request.POST["telefono_usuario"]
         )
 
-        return redirect("list_usuarios_inscritos")
+        return redirect("lista_usuarios_inscritos")
 
     return render(request, "gestion/POST/formulario_usuario.html")
 
@@ -71,7 +71,7 @@ def registrar_sala_formulario(request):
             capacidad_sala=request.POST["capacidad_sala"],
             ubicacion_sala=request.POST["ubicacion_sala"]
         )
-        return redirect("crear_sala_formulario")
+        return redirect("registrar_sala_formulario")
     return render(request, "gestion/POST/formulario_sala.html")
 
 
@@ -128,14 +128,14 @@ def registrar_responsable_sala(request) -> JsonResponse:
 # Endpoint para crear un responsable de sala a través de un formulario HTML
 def registrar_responsable_sala_formulario(request):
     if request.method == "POST":
-        sala = Sala.objects.get(id=request.POST["sala_id"])
+        sala = Sala.objects.get(id=request.POST["sala"])
         ResponsableSala.objects.create(
             nombre_responsable=request.POST["nombre_responsable"],
             telefono_responsable=request.POST["telefono_responsable"],
             email_responsable=request.POST["email_responsable"],
             sala=sala
         )
-        return redirect("crear_responsable_sala_formulario")
+        return redirect("registrar_responsable_sala_formulario")
     salas = Sala.objects.all()
     return render(request, "gestion/POST/formulario_responsable_sala.html", {"salas": salas})
 
