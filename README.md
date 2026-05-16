@@ -112,5 +112,5 @@ python manage.py runserver
 ## Inscripciones
 - `GET /gestion/actividades/<int:actividad_id>/inscripciones/` → Ver usuarios inscritos en una actividad
 - `POST /gestion/actividades/<int:actividad_id>/inscribir/` → Inscribir usuario en actividad
-- `DELETE /gestion/actividades/<int:actividad_id>/inscripciones/<int:usuario_id>/eliminar/` → Eliminar inscripción
+- `POST /gestion/actividades/<int:actividad_id>/inscripciones/<int:usuario_id>/eliminar/` → Eliminar inscripción
 ---
